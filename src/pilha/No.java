@@ -1,4 +1,4 @@
-
+package pilha;
 public class No {
 	private int dado;
 	private No proximo;
