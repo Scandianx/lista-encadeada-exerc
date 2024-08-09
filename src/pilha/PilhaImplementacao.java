@@ -5,7 +5,8 @@ public class PilhaImplementacao implements Pilha {
     private int tamanho = 0;
 
     @Override
-    public boolean empilharElemento(No no) {
+    public boolean empilharElemento(int num) {
+        No no = new No(num);
         no.definirProximo(noInical);
         noInical = no;
         tamanho++;
@@ -36,6 +37,25 @@ public class PilhaImplementacao implements Pilha {
         return tamanho;
     }
 
+    public boolean compararPilha(PilhaImplementacao pilha){
+
+        if (pilha.getTamanho() != this.getTamanho()) {
+            return false;
+        }
+        No noAtual = this.noInical;
+        No noComparar = pilha.noInical;
+        while (noAtual != null && noComparar != null) {
+            if(noAtual.obterDado()!= noComparar.obterDado()){
+                return false;
+            }
+            noAtual = noAtual.obterProximo();
+            noComparar = noComparar.obterProximo();
+            
+
+
+        } 
+        return true;
+    }
     @Override
     public String toString() {
         StringBuilder elementos = new StringBuilder();

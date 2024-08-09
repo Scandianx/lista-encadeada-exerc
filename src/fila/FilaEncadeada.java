@@ -2,7 +2,7 @@ package fila;
 
 public class FilaEncadeada implements Fila  {
     private No inicio = null;
-    private No fim = null;
+    
     private int tamanho = 0;
     
 
@@ -21,7 +21,7 @@ public class FilaEncadeada implements Fila  {
         }
         No novoNo = new No(valor);
         anterior.definirProximo(novoNo);
-        this.fim = novoNo;
+        
         tamanho++;
     }
 
@@ -29,7 +29,6 @@ public class FilaEncadeada implements Fila  {
     public void excluir() {
         if (estaVazia()) {
             System.out.println("Pilha vazia");
-            tamanho--;
             return;
         }
         if(this.inicio.obterProximo()==null) {

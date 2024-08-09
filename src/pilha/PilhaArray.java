@@ -11,9 +11,9 @@ public class PilhaArray implements Pilha {
     }
 
     @Override
-    public boolean empilharElemento(No no) {
+    public boolean empilharElemento(int num) {
         System.out.println("-----------------------");
-        System.out.println("Antes de adicionar " + no.obterDado());
+        System.out.println("Antes de adicionar " + num);
        System.out.println(this.toString());
         System.out.println("-----------------------");
 
@@ -24,7 +24,7 @@ public class PilhaArray implements Pilha {
                 
             }
             if (c == topo) {
-                elemento[c] = no.obterDado();
+                elemento[c] = num;
                 topo++;
                 return true;
             }
