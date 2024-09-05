@@ -111,53 +111,50 @@ public class ListaEncadeadaSimples implements ListaEncadeada {
 		}
 		return false;
 	}
-   
 
-	 public boolean incluirEmOrdemCrescente(int dado){
+	public boolean incluirEmOrdemCrescente(int dado) {
 		No noNovo = new No(dado);
 		No noInicial = this.noInicial;
 		No noAnterior = null;
-		if(this.noInicial.obterProximo()==null){
-			if (this.noInicial.obterDado()<dado){
-				
+		if (this.noInicial.obterProximo() == null) {
+			if (this.noInicial.obterDado() < dado) {
+
 				this.noInicial.definirProximo(noNovo);
 				this.totalDeElementos++;
 				return true;
 
-
-			}
-			else {
-                noAnterior=this.noInicial;
-				this.noInicial=noNovo;
+			} else {
+				noAnterior = this.noInicial;
+				this.noInicial = noNovo;
 				this.noInicial.definirProximo(noAnterior);
 			}
 		}
 		if (this.noInicial != null) {
-			while(noInicial.obterProximo()!=null){
-               if(noInicial.obterDado()<=dado && noInicial.obterProximo().obterDado()>dado){
-                   noAnterior.definirProximo(noNovo);
-				   noNovo.definirProximo(noInicial);
-				   this.totalDeElementos++;
-				   return true;
-			   }
-			   noAnterior = noInicial;
-			   noInicial= noInicial.obterProximo();
-			   if (noInicial.obterProximo()==null){
-				if (noInicial.obterDado()<=dado){
-					noInicial.definirProximo(noNovo);
+			while (noInicial.obterProximo() != null) {
+				if (noInicial.obterDado() <= dado && noInicial.obterProximo().obterDado() > dado) {
+					noAnterior.definirProximo(noNovo);
+					noNovo.definirProximo(noInicial);
 					this.totalDeElementos++;
-				    return true;
+					return true;
 				}
-			   }
-			   
+				noAnterior = noInicial;
+				noInicial = noInicial.obterProximo();
+				if (noInicial.obterProximo() == null) {
+					if (noInicial.obterDado() <= dado) {
+						noInicial.definirProximo(noNovo);
+						this.totalDeElementos++;
+						return true;
+					}
+				}
+
 			}
 			adicionarInicio(dado);
 			return false;
-		}
-		else {
+		} else {
 			return false;
 		}
-	 }
+	}
+
 	@Override
 	public boolean excluirMeio(int posicaoExclusao) {
 		No noAtual = this.noInicial;
@@ -211,6 +208,58 @@ public class ListaEncadeadaSimples implements ListaEncadeada {
 			noAtual = noAtual.obterProximo();
 		}
 		return "ListaEncadeada [ " + elementos + "]";
+	}
+
+	public int pesquisaBinaria(int dado) {
+		int inicio = 0;
+		int fim = this.totalDeElementos - 1;
+	
+		while (inicio <= fim) {
+			int meio = (inicio + fim) / 2;
+			int valorMeio = obterDado(meio); 
+	
+			if (valorMeio == dado) {
+				return meio; 
+			} else if (valorMeio < dado) {
+				inicio = meio + 1;
+			} else {
+				fim = meio - 1;
+			}
+		}
+	
+		return -1; 
+	}
+	public void bubbleSort() {
+		if (this.noInicial == null || this.noInicial.obterProximo() == null) {
+			return; 
+		}
+	
+		boolean trocou;
+		do {
+			trocou = false;
+			No noAtual = this.noInicial;
+			No noAnterior = null;
+	
+			while (noAtual != null && noAtual.obterProximo() != null) {
+				No noProximo = noAtual.obterProximo();
+				if (noAtual.obterDado() > noProximo.obterDado()) {
+					
+					if (noAnterior == null) {
+						this.noInicial = noProximo;
+					} else {
+						noAnterior.definirProximo(noProximo);
+					}
+	
+					noAtual.definirProximo(noProximo.obterProximo());
+					noProximo.definirProximo(noAtual);
+	
+					trocou = true;
+				}
+	
+				noAnterior = noAtual;
+				noAtual = noAtual.obterProximo();
+			}
+		} while (trocou);
 	}
 
 	@Override
