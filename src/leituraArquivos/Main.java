@@ -6,7 +6,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         CsvUtils csvUtils = new CsvUtils();
-        String inputPath = "C:\\Users\\Filipe\\Desktop\\Git repositories\\exercs\\lista-encadeada-exerc\\src\\leituraArquivos\\AgeDataset-V1.csv";
+        String inputPath = "C:\\Users\\Filipe\\Desktop\\Git repositories\\exercs\\lista-encadeada-exerc\\AgeDataset-V1.csv";
         String outputPath = "FilteredDataset.csv";
         try {
             List<Pessoa> pessoas = csvUtils.lerCsv(inputPath);

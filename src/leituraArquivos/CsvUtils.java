@@ -89,7 +89,7 @@ public class CsvUtils {
                         
                         String retorno = processarAspas(linha.substring(i + 1));
                         retornoArray[colunas] = retorno;
-                        i = i + retorno.length() + 1;
+                        i = i + retorno.length() -1;
                         
                     }  else {
                         retornoArray[colunas] = retornoArray[colunas] + linha.charAt(i);
@@ -105,12 +105,13 @@ public class CsvUtils {
         int tamanho = linha.length();
         char asp = '"';
         StringBuilder retorno = new StringBuilder();
+        retorno.append("\"");
         for(int i=0; i< tamanho; i++) {
             if (linha.charAt(i)==asp) {
-                return retorno.toString();
+                return retorno.append("\"").toString();
             }
             retorno.append(linha.charAt(i));
         }
-        return retorno.toString();
+        return retorno.append("\"").toString();
     }
 }
