@@ -21,7 +21,12 @@ public class RecursaoMain {
             return vetor[0];
         }
         int maiorDosRestantes = maiorElemento(vetor, tamanho - 1);
-        return Math.max(vetor[tamanho - 1], maiorDosRestantes);
+        
+        if (vetor[tamanho - 1] > maiorDosRestantes) {
+            return vetor[tamanho - 1];
+        } else {
+            return maiorDosRestantes;
+        }
     }
 
     public static void main(String[] args) {
