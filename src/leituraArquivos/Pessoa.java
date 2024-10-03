@@ -1,16 +1,16 @@
 package leituraArquivos;
 
 public class Pessoa implements IPessoa{
-    private int id;
     private String nome;
     private String shortDescription;
     private String gender;
     private String country;
     private String occupation;
-    private int birthYear;
+    private String birthYear;
+    private String deathyear;
 
-    public Pessoa(int id, String nome, String shortDescription, String gender, String country, String occupation, int birthYear) {
-        this.id = id;
+    public Pessoa(String deathyear, String nome, String shortDescription, String gender, String country, String occupation, String birthYear) {
+        this.deathyear = deathyear;
         this.nome = nome;
         this.shortDescription = shortDescription;
         this.gender = gender;
@@ -19,13 +19,7 @@ public class Pessoa implements IPessoa{
         this.birthYear = birthYear;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+   
 
     public String getNome() {
         return nome;
@@ -67,12 +61,24 @@ public class Pessoa implements IPessoa{
         this.occupation = occupation;
     }
 
-    public int getBirthYear() {
+    public String getBirthYear() {
         return birthYear;
     }
 
-    public void setBirthYear(int birthYear) {
+    public void setBirthYear(String birthYear) {
         this.birthYear = birthYear;
+    }
+
+
+
+    public String getDeathyear() {
+        return deathyear;
+    }
+
+
+
+    public void setDeathyear(String deathyear) {
+        this.deathyear = deathyear;
     }
     
 }

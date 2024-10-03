@@ -6,9 +6,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         CsvUtils csvUtils = new CsvUtils();
-        String inputPath = "AgeDataset-V1.csv";
+        String inputPath = "C:\\Users\\Filipe\\Desktop\\Git repositories\\exercs\\lista-encadeada-exerc\\src\\leituraArquivos\\AgeDataset-V1.csv";
         String outputPath = "FilteredDataset.csv";
-
         try {
             List<Pessoa> pessoas = csvUtils.lerCsv(inputPath);
             csvUtils.escreverCsv(pessoas, outputPath);
@@ -16,5 +15,6 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
 }

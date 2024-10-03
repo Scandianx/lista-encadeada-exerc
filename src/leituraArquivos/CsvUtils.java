@@ -10,6 +10,23 @@ import java.util.List;
 
 public class CsvUtils {
 
+    public void escreverCsv(List<Pessoa> pessoas, String filePath) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            bw.write("Nome,Descricao,Genero,Pais,Emprego,Ano nasc,Ano morte\n");
+            for (Pessoa pessoa : pessoas) {
+                bw.write(
+                        pessoa.getNome() + "," +
+                        pessoa.getShortDescription() + "," +
+                        pessoa.getGender() + "," +
+                        pessoa.getCountry() + "," +
+                        pessoa.getOccupation() + "," +
+                        pessoa.getBirthYear() + "," +
+                        pessoa.getDeathyear()
+                        + "\n");
+            }
+        }
+    }
+
     public List<Pessoa> lerCsv(String filePath) throws IOException {
         List<Pessoa> pessoas = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -18,37 +35,82 @@ public class CsvUtils {
             while ((linha = br.readLine()) != null) {
                 if (primeiraLinha) {
                     primeiraLinha = false;
-                    continue; // pula a primeira linha de cabeçalhos
+                    continue; 
                 }
-                String[] campos = linha.split(",");
-                Pessoa pessoa = new Pessoa(
-                        Integer.parseInt(campos[0]), // Id
-                        campos[1],                    // Name
-                        campos[2],                    // Short description
-                        campos[3],                    // Gender
-                        campos[4],                    // Country
-                        campos[5],                    // Occupation
-                        Integer.parseInt(campos[6])   // Birth year
+                String[] campos = processarLinha(linha);
+                if (campos.length>7) {
+                    Pessoa pessoa = new Pessoa(
+                        campos[7], 
+                        campos[1], 
+                        campos[2], 
+                        campos[3], 
+                        campos[4], 
+                        campos[5], 
+                        campos[6]
                 );
                 pessoas.add(pessoa);
+                } else {
+                    Pessoa pessoa = new Pessoa(
+                        null, 
+                        campos[1], 
+                        campos[2], 
+                        campos[3], 
+                        campos[4], 
+                        campos[5], 
+                        campos[6]
+                );
+                pessoas.add(pessoa);
+                }
+                
             }
         }
+        // pessoas.forEach(v -> System.out.println("Nome:" + v.getNome() + "descricao: " + v.getShortDescription() + "genero " +v.getGender() + "pais " + v.getCountry() + v.getOccupation() + v.getBirthYear()));
         return pessoas;
     }
 
-    public void escreverCsv(List<Pessoa> pessoas, String filePath) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            bw.write("Id,Name,Short description,Gender,Country,Occupation,Birth year\n");
-            for (Pessoa pessoa : pessoas) {
-                bw.write(pessoa.getId() + "," +
-                        pessoa.getNome() + "," +
-                        pessoa.getShortDescription() + "," +
-                        pessoa.getGender() + "," +
-                        pessoa.getCountry() + "," +
-                        pessoa.getOccupation() + "," +
-                        pessoa.getBirthYear() + "\n");
+    public String[] processarLinha(String linha) {
+        String[] retornoArray = new String[200];
+        retornoArray[0] = "";
+        int tamanho = linha.length();
+        char v = ',';
+        char asp = '"';
+        int colunas = 0;
+        
+        // Escapar aspas (lembrar qnd fabio perguntar)
+        if (!linha.contains("\"")) {
+            return linha.split(",");
+        } else {
+            for(int i=0; i< tamanho; i++) {
+                if(linha.charAt(i)==v) {
+                    colunas++;
+                    retornoArray[colunas] = "";
+                } else {
+                    if (linha.charAt(i)==asp) {
+                        
+                        String retorno = processarAspas(linha.substring(i + 1));
+                        retornoArray[colunas] = retorno;
+                        i = i + retorno.length() + 1;
+                        
+                    }  else {
+                        retornoArray[colunas] = retornoArray[colunas] + linha.charAt(i);
+                    }
+                }
             }
         }
+        
+        return retornoArray;
+    }
+    private String processarAspas(String linha) {
+        
+        int tamanho = linha.length();
+        char asp = '"';
+        StringBuilder retorno = new StringBuilder();
+        for(int i=0; i< tamanho; i++) {
+            if (linha.charAt(i)==asp) {
+                return retorno.toString();
+            }
+            retorno.append(linha.charAt(i));
+        }
+        return retorno.toString();
     }
 }
-
